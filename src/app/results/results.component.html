@@ -1,0 +1,61 @@
+<h1>Ergebnisse</h1>
+<mat-divider></mat-divider>
+<table>
+  <tr>
+      <td><p><b>Joy of Use:</b></p></td>
+  </tr>
+  <tr>  
+    <td><mat-progress-bar value={{getMult(data.result1)}}></mat-progress-bar></td>
+    <td>{{data.result1}}</td>    
+  </tr>
+  <tr>
+    <td><p><b>Ease of Use:</b></p></td>
+  </tr>
+  <tr>   
+    <td><mat-progress-bar value={{getMult(data.result2)}}></mat-progress-bar></td> 
+    <td>{{data.result2}}</td>  
+  </tr>
+  <tr>
+    <td><p><b>Interaction Quality:</b></p></td>
+  </tr>
+  <tr>
+    <td><mat-progress-bar value={{getMult(data.result3)}}></mat-progress-bar></td>
+    <td>{{data.result3}}</td>   
+  </tr> 
+  <br>
+  <tr>
+    <td><p><b>Final Result:</b></p></td>    
+  </tr>
+  <tr>
+    <td><mat-progress-bar value={{getMult(data.resultfinal)}}></mat-progress-bar></td>
+    <td>{{data.resultfinal}}</td>   
+  </tr>
+</table>
+<br>   
+<mat-divider></mat-divider> 
+<div *ngIf="currentuser==NULL">
+  <p>Einloggen um Ergebnisse speichern zu können!</p>
+</div> 
+<div *ngIf="currentuser">
+<div class="formcontainer" >
+<mat-form-field [formGroup]="angForm" novalidate>
+  <input matInput placeholder="Speichern unter..." type="text" class="form-control" name="save_name"  maxlength="18" formControlName="save_name" #save_name/> 
+  <mat-hint align="end">{{save_name.value?.length || 0}}/18</mat-hint>
+  <mat-error *ngIf="angForm.controls['save_name'].invalid && (angForm.controls['save_name'].dirty || angForm.controls['save_name'].touched)" class="alert alert-danger">
+    <mat-error *ngIf="angForm.controls['save_name'].errors.required">
+      Ein Name wird vorrausgesetzt!
+    </mat-error>       
+  </mat-error>   
+</mat-form-field>
+<mat-form-field>
+  <mat-select placeholder="Speichern in Projekt..." #project>
+    <mat-option *ngFor="let project of projects | Userpipe: user " [value]="project._id">
+      {{project.name}}
+    </mat-option>
+    <mat-option>In kein Projekt speichern...</mat-option> 
+  </mat-select>
+</mat-form-field>
+</div>
+<br><br>
+<button mat-stroked-button (click)="addAdUnit(save_name.value, data.resultfinal, data.result1, data.result2, data.result3, data.value_array, project.value)" (click)="openSnackBar(save_name.value)" [disabled]="angForm.controls['save_name'].invalid" routerLink="/savedfiles">Ergebnisse speichern</button>
+</div>

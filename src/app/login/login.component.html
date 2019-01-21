@@ -1,0 +1,51 @@
+<div *ngIf="currentuser"> <!-- If currentuser has a value, this div-container with the user-data is shown-->
+  <h1>Aktueller Nutzer</h1>
+  <mat-divider></mat-divider>
+  <h3>{{currentusername}}</h3>
+  <table class="buttoncontainer">
+    <tr>
+      <td>Vorname:</td>
+      <td>{{currentuserfirstname}}</td>
+    </tr>
+    <tr>
+      <td>Nachname:</td>    
+      <td>{{currentuserlastname}}</td>
+    </tr>    
+  </table> 
+  <br><br>
+  <mat-divider></mat-divider>
+  <br>
+  <table class="buttoncontainer">
+      <td><button mat-stroked-button (click)="logout()">Ausloggen</button></td>
+      <td><button mat-stroked-button routerLink='/edituser/{{currentuserid}}'>Bearbeiten</button></td> 
+  </table>
+</div>
+<div *ngIf="currentuser==Null"> <!-- If currentuser is empty, the Login-Form is shown -->
+  <h1>Login</h1>
+  <div class="formcontainer">      
+    <mat-form-field [formGroup]="loginForm" novalidate>
+      <input matInput placeholder="Login Name" type="text" class="form-control" name="login_name"  maxlength="18" formControlName="login_name" #login_name/> 
+      <mat-hint align="end">{{login_name.value?.length || 0}}/18</mat-hint>
+       <mat-error *ngIf="loginForm.controls['login_name'].invalid && (loginForm.controls['login_name'].dirty || loginForm.controls['login_name'].touched)" class="alert alert-danger">
+          <mat-error *ngIf="loginForm.controls['login_name'].errors.required">
+             Ein Name wird vorrausgesetzt!
+          </mat-error>       
+        </mat-error>     
+    </mat-form-field>
+    <mat-form-field [formGroup]="loginForm" novalidate>
+      <input matInput placeholder="Passwort" [type]="hide ? 'password' : 'text'" class="form-control" name="password"  minlength="6" maxlength="18" formControlName="password" #password/>      
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-error *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)" class="alert alert-danger">
+          <mat-error *ngIf="loginForm.controls['password'].errors.required">
+            Das Passwort muss mindestens 6 Zeichen lang sein!
+          </mat-error>       
+        </mat-error> 
+    </mat-form-field>    
+    </div>
+    <p *ngIf="message" class="text-center error">{{message}}</p> <!-- message from component -->
+    <table class="buttoncontainer">
+      <td><button mat-stroked-button (click)="login()" 
+      [disabled]="loginForm.controls['login_name'].invalid || loginForm.controls['password'].invalid" >Login</button></td>       
+      <td><button mat-stroked-button (click)="openDialog()" >Neuen Nutzer registrieren</button></td>      
+    </table>   
+  </div>

@@ -1,0 +1,550 @@
+<div class="formcontainer">
+<mat-form-field [formGroup]="angForm" novalidate> 
+   <input matInput placeholder="Neuer Name ..." type="text" class="form-control" name="save_name" maxlength="18" formControlName="save_name" #save_name
+    [(ngModel)] = "adunit.save_name"/> 
+   <mat-hint align="end">{{save_name.value?.length || 0}}/18</mat-hint>
+   <mat-error *ngIf="angForm.controls['save_name'].invalid && (angForm.controls['save_name'].dirty || angForm.controls['save_name'].touched)" 
+   class="alert alert-danger">
+     <mat-error *ngIf="angForm.controls['save_name'].errors.required">
+       Ein Name wird vorrausgesetzt!
+     </mat-error> 
+    </mat-error> 
+ </mat-form-field>
+ <mat-form-field [formGroup]="angForm" novalidate>
+  <mat-select placeholder="Speichern in Projekt..." type="text" class="form-control" name="project" formControlName="project" #project [(ngModel)] = "adunit.project">
+    <mat-option *ngFor="let project of projects | Userpipe: user " [value]="project._id">
+      {{project.name}}
+    </mat-option>
+    <mat-option>In kein Projekt speichern...</mat-option> 
+  </mat-select>
+</mat-form-field>
+</div>
+ <br>
+  <button mat-stroked-button (click)="updateAdUnit(save_name.value, adunit.result_final, adunit.result_1, adunit.result_2, adunit.result_3, adunit.value_array, project.value)" 
+  (click)="openSnackBar(save_name.value)" [disabled]="angForm.controls['save_name'].invalid" routerLink="/savedfiles">
+  Daten aktualisieren</button> 
+<br><br>
+ <mat-divider></mat-divider> 
+ <!--
+  furhter annotations to the form: (all formulars are build similar in this app)
+  - [(ngModel)] or [formGroup] is used for two-way-data-binding, in the case of [(ngModel)] to showcase the current save_name value of the adunit, which is imported in component file
+  - #save_name is used for refering to the input, used in angForm.controls and updateAdUnit(save_name.value ...)
+  - {{save.name.value?.length}} is used to show the length of the userinput in this form
+  - mat-error shows an error message ("Ein Name wird vorrausgesetzt!") if the *ngIf conditions are true 
+  
+  Error in Mat-Select:
+  Project will not be safed if the default value has not been changed (after safing its changed to "no project"), only if another value is selected it will be safed
+
+  --
+  Version with adjustable Values
+
+ <mat-tab-group dynamicHeight>
+    <mat-tab label="System an sich">
+      <div class="example-small-box mat-elevation-z4">        
+    <table>
+    <tr>
+        <td><p><b>Freundlichkeit:</b></p></td>
+        <td>{{slider1.value}} /10</td>        
+    </tr>    
+    <tr>
+      <td><p>unfreundlich</p></td>
+      <td><mat-slider #slider1="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[0].value}} [(ngModel)]="adunit.value_array[0].value"></mat-slider></td>
+      <td><p>freundlich</p></td>
+    </tr>
+    <tr>
+      <td><p><b>Sympathie:</b></p></td>
+      <td>{{slider2.value}} /10</td>
+    </tr>
+    <tr>      
+      <td><p>unsympathisch</p></td>
+      <td><mat-slider #slider2="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[1].value}} [(ngModel)]="adunit.value_array[1].value"></mat-slider></td>
+      <td><p>sympathisch</p></td>
+    </tr>
+    <tr>
+      <td><p><b>Fehlertoleranz:</b></p></td>
+      <td>{{slider3.value}} /10</td>
+    </tr>
+    <tr>
+      <td><p>fehleranfällig</p></td>
+      <td><mat-slider #slider3="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[2].value}} [(ngModel)]="adunit.value_array[2].value"></mat-slider></td>
+      <td><p>fehlertolerant</p></td>
+    </tr>
+    </table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Gestaltung">
+      <div class="example-small-box mat-elevation-z4">
+          <table>
+              <tr>
+                <td><p><b>Anziehung: </b></p></td>
+                <td>{{slider4.value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>abstoßend</p></td>
+                <td><mat-slider #slider4="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[3].value}} [(ngModel)]="adunit.value_array[3].value"></mat-slider></td>
+                <td><p>anziehend</p></td>
+              </tr>
+              <tr>
+                <td><p><b>Schönheit:</b></p></td>
+                <td>{{slider5.value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>hässlich</p></td>
+                <td><mat-slider #slider5="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[4].value}} [(ngModel)]="adunit.value_array[4].value"></mat-slider></td>
+                <td><p>schön</p></td>
+              </tr>
+              <tr>
+                <td><p><b>Reizend:</b></p></td>
+                <td>{{slider6.value}} /10</td>
+              </tr>
+              <tr>      
+                <td><p>reizlos</p></td>
+                <td><mat-slider #slider6="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[5].value}} [(ngModel)]="adunit.value_array[5].value"></mat-slider></td>
+                <td><p>reizvoll</p></td>
+              </tr>
+              <tr>
+                <td><p><b>Interesse:</b></p></td>
+                <td>{{slider7.value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>öde</p></td>
+                <td><mat-slider #slider7="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[6].value}} [(ngModel)]="adunit.value_array[6].value"></mat-slider></td>
+                <td><p>interessant</p></td>
+              </tr>
+              <tr>
+                <td><p><b>Ordnung:</b></p></td>
+                <td>{{slider8.value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>chaotisch</p></td>
+                <td><mat-slider #slider8="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[7].value}} [(ngModel)]="adunit.value_array[7].value"></mat-slider></td>
+                <td><p>geordnet</p></td>
+              </tr>
+              <tr>
+                <td><p><b>Klarheit:</b></p></td>
+                <td>{{slider9.value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>unklar</p></td>
+                <td><mat-slider #slider9="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[8].value}} [(ngModel)]="adunit.value_array[8].value"></mat-slider></td>
+                <td><p>klar</p></td>
+              </tr>
+              <tr>
+                <td><p><b>Helfend:</b></p></td>
+                <td>{{slider23.value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>störend</p></td>
+                <td><mat-slider #slider23="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[22].value}} [(ngModel)]="adunit.value_array[22].value"></mat-slider></td>
+                <td><p>helfend</p></td>
+              </tr>
+            </table>
+      </div>
+    </mat-tab>  
+<mat-tab label="Interaktion">
+  <div class="example-small-box mat-elevation-z4">  
+<table>
+    <tr>
+        <td><p><b>Abwechslung:</b></p></td>
+        <td>{{slider24.value}} /10</td>
+      </tr>
+      <tr>
+        <td><p>eintönig</p></td>
+        <td><mat-slider #slider24="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[23].value}} [(ngModel)]="adunit.value_array[23].value"></mat-slider></td>
+        <td><p>abwechslungsreich</p></td>
+    </tr>
+    <tr>
+      <td><p><b>Beweglichkeit:</b></p></td>
+      <td>{{slider10.value}} /10</td>  
+    </tr>
+    <tr>
+      <td><p>holprig</p></td>  
+      <td><mat-slider #slider10="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[9].value}} [(ngModel)]="adunit.value_array[9].value"></mat-slider></td> 
+      <td><p>flüßig</p></td>       
+    </tr>
+    <tr>
+      <td><p><b>Geschwindigkeit:</b></p></td>
+      <td>{{slider11.value}} /10</td>
+    </tr> 
+    <tr>
+      <td><p>langsam</p></td>  
+      <td><mat-slider #slider11="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[10].value}} [(ngModel)]="adunit.value_array[10].value"></mat-slider></td> 
+      <td><p>schnell</p></td> 
+    </tr>
+    <tr>
+      <td><p><b>Beanspruchung:</b></p></td>
+      <td>{{slider12.value}} /10</td>
+    </tr> 
+    <tr>
+      <td><p>beanspruchend</p></td>  
+      <td><mat-slider #slider12="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[11].value}} [(ngModel)]="adunit.value_array[11].value"></mat-slider></td> 
+      <td><p>schonend</p></td> 
+    </tr> 
+    <tr>
+      <td><p><b>Belastung:</b></p></td>
+      <td>{{slider13.value}} /10</td>
+    </tr> 
+    <tr>
+      <td><p>belastend</p></td>  
+      <td><mat-slider #slider13="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[12].value}} [(ngModel)]="adunit.value_array[12].value"></mat-slider></td> 
+      <td><p>entlastend</p></td> 
+    </tr>
+    <tr>
+      <td><p><b>Fehler:</b></p></td>
+      <td>{{slider14.value}} /10</td>
+    </tr> 
+    <tr>
+      <td><p>fehlerreich</p></td>  
+      <td><mat-slider #slider14="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[13].value}} [(ngModel)]="adunit.value_array[13].value"></mat-slider></td> 
+      <td><p>fehlerarm</p></td> 
+    </tr> 
+</table>   
+</div>
+</mat-tab>
+<mat-tab label="Eingabemöglichkeiten">
+    <div class="example-small-box mat-elevation-z4">  
+<table>
+  <tr>
+    <td><p><b>Vorteilhaftigkeit:</b></p></td>
+    <td>{{slider15.value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>nachteilig</p></td>
+    <td><mat-slider #slider15="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[14].value}} [(ngModel)]="adunit.value_array[14].value"></mat-slider></td>
+    <td><p>vorteilhaft</p></td>
+  </tr>
+  <tr>
+    <td><p><b>Ergänzung:</b></p></td>
+    <td>{{slider16.value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>blockieren sich</p></td>
+    <td><mat-slider #slider16="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[15].value}} [(ngModel)]="adunit.value_array[15].value"></mat-slider></td>
+    <td><p>ergänzen sich</p></td>
+  </tr>
+  <tr>
+    <td><p><b>Unterstützung:</b></p></td>
+    <td>{{slider17.value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>behindern sich</p></td>
+    <td><mat-slider #slider17="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[16].value}} [(ngModel)]="adunit.value_array[16].value"></mat-slider></td>
+    <td><p>unterstützen sich</p></td>
+  </tr>
+  <tr>
+    <td><p><b>Kombinierungsmöglichkeit:</b></p></td>
+    <td>{{slider18.value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>sind schlecht zu kombinieren</p></td>
+    <td><mat-slider #slider18="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[17].value}} [(ngModel)]="adunit.value_array[17].value"></mat-slider></td>
+    <td><p>sind gut zu kombinieren</p></td>
+  </tr>
+  <tr>
+    <td><p><b>Zusammenarbeit:</b></p></td>
+    <td>{{slider19.value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>arbeiten schlecht zusammen</p></td>
+    <td><mat-slider #slider19="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[18].value}} [(ngModel)]="adunit.value_array[18].value"></mat-slider></td>
+    <td><p>arbeiten gut zusammen</p></td>
+  </tr>
+</table>
+</div>
+</mat-tab>
+<mat-tab label="Rückmeldung">
+    <div class="example-small-box mat-elevation-z4">
+<table>
+  <tr>
+    <td><p><b>Förderlichkeit:</b></p></td>
+    <td>{{slider20.value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>hinderlich</p></td>
+    <td><mat-slider #slider20="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[19].value}} [(ngModel)]="adunit.value_array[19].value"></mat-slider></td>
+    <td><p>förderlich</p></td>
+  </tr>
+  <tr>
+    <td><p><b>Sinnvoll:</b></p></td>
+    <td>{{slider21.value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>sinnlos</p></td>
+    <td><mat-slider #slider21="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[20].value}} [(ngModel)]="adunit.value_array[20].value"></mat-slider></td>
+    <td><p>sinnvoll</p></td>
+  </tr>
+  <tr>
+    <td><p><b>Erklärend:</b></p></td>
+    <td>{{slider22.value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>verwirrend</p></td>
+    <td><mat-slider #slider22="matSlider" thumbLabel min="0" max="10" step="1" value={{adunit.value_array[21].value}} [(ngModel)]="adunit.value_array[21].value"></mat-slider></td>
+    <td><p>erklärend</p></td>
+  </tr>
+</table>
+</div>
+</mat-tab>
+</mat-tab-group>
+<br><br>
+<button mat-stroked-button (click)="calculateupdated()" 
+(click)="updateAdUnit(save_name.value, adunit.result_final, adunit.result_1, adunit.result_2, adunit.result_3, adunit.value_array, project.value)" 
+(click)="openSnackBar(save_name.value)" [disabled]="angForm.controls['save_name'].invalid" routerLink="/savedfiles">
+Daten aktualisieren</button>
+-->
+<mat-tab-group dynamicHeight>
+    <mat-tab label="System an sich">
+        <p>Das System ist ...</p> 
+      <div>             
+    <table>
+    <tr>
+        <td></td>
+        <td>{{adunit.value_array[0].value}} /10</td>        
+    </tr>    
+    <tr>
+      <td><p>unfreundlich</p></td>
+      <td><mat-progress-bar value={{getMult(adunit.value_array[0].value)}}></mat-progress-bar></td>
+      <td><p>freundlich</p></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>{{adunit.value_array[1].value}} /10</td>
+    </tr>
+    <tr>      
+      <td><p>unsympathisch</p></td>
+      <td><mat-progress-bar value={{getMult(adunit.value_array[1].value)}}></mat-progress-bar></td>
+      <td><p>sympathisch</p></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>{{adunit.value_array[2].value}} /10</td>
+    </tr>
+    <tr>
+      <td><p>fehleranfällig</p></td>
+      <td><mat-progress-bar value={{getMult(adunit.value_array[2].value)}}></mat-progress-bar></td> 
+      <td><p>fehlertolerant</p></td>
+    </tr>
+    </table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Gestaltung">
+      <p>Die Gestaltung des Systems ist ...</p> 
+      <div>
+          <table>
+              <tr>
+                <td></td>
+                <td>{{adunit.value_array[3].value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>abstoßend</p></td>
+                <td><mat-progress-bar value={{getMult(adunit.value_array[3].value)}}></mat-progress-bar></td> 
+                <td><p>anziehend</p></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>{{adunit.value_array[4].value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>hässlich</p></td>
+                <td><mat-progress-bar value={{getMult(adunit.value_array[4].value)}}></mat-progress-bar></td> 
+                <td><p>schön</p></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>{{adunit.value_array[5].value}} /10</td>
+              </tr>
+              <tr>      
+                <td><p>reizlos</p></td>
+                <td><mat-progress-bar value={{getMult(adunit.value_array[5].value)}}></mat-progress-bar></td>
+                <td><p>reizvoll</p></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>{{adunit.value_array[6].value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>öde</p></td>
+                <td><mat-progress-bar value={{getMult(adunit.value_array[6].value)}}></mat-progress-bar></td>
+                <td><p>interessant</p></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>{{adunit.value_array[7].value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>chaotisch</p></td>
+                <td><mat-progress-bar value={{getMult(adunit.value_array[7].value)}}></mat-progress-bar></td>
+                <td><p>geordnet</p></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>{{adunit.value_array[8].value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>unklar</p></td>
+                <td><mat-progress-bar value={{getMult(adunit.value_array[8].value)}}></mat-progress-bar></td>
+                <td><p>klar</p></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>{{adunit.value_array[22].value}} /10</td>
+              </tr>
+              <tr>
+                <td><p>störend</p></td>
+                <td><mat-progress-bar value={{getMult(adunit.value_array[22].value)}}></mat-progress-bar></td>
+                <td><p>helfend</p></td>
+              </tr>
+            </table>
+      </div>
+    </mat-tab>  
+<mat-tab label="Interaktion">
+  <p>Die Interaktion mit dem System ist ...</p>
+  <div>  
+<table>
+    <tr>
+        <td></td>
+        <td>{{adunit.value_array[23].value}} /10</td>
+      </tr>
+      <tr>
+        <td><p>eintönig</p></td>
+        <td><mat-progress-bar value={{getMult(adunit.value_array[23].value)}}></mat-progress-bar></td>
+        <td><p>abwechslungsreich</p></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>{{adunit.value_array[9].value}} /10</td>  
+    </tr>
+    <tr>
+      <td><p>holprig</p></td>  
+      <td><mat-progress-bar value={{getMult(adunit.value_array[9].value)}}></mat-progress-bar></td>
+      <td><p>flüßig</p></td>       
+    </tr>
+    <tr>
+      <td></td>
+      <td>{{adunit.value_array[10].value}} /10</td>
+    </tr> 
+    <tr>
+      <td><p>langsam</p></td>  
+      <td><mat-progress-bar value={{getMult(adunit.value_array[10].value)}}></mat-progress-bar></td>
+      <td><p>schnell</p></td> 
+    </tr>
+    <tr>
+      <td></td>
+      <td>{{adunit.value_array[11].value}} /10</td>
+    </tr> 
+    <tr>
+      <td><p>beanspruchend</p></td>  
+      <td><mat-progress-bar value={{getMult(adunit.value_array[11].value)}}></mat-progress-bar></td>
+      <td><p>schonend</p></td> 
+    </tr> 
+    <tr>
+      <td></td>
+      <td>{{adunit.value_array[12].value}} /10</td>
+    </tr> 
+    <tr>
+      <td><p>belastend</p></td>  
+      <td><mat-progress-bar value={{getMult(adunit.value_array[12].value)}}></mat-progress-bar></td>
+      <td><p>entlastend</p></td> 
+    </tr>
+    <tr>
+      <td></td>
+      <td>{{adunit.value_array[13].value}} /10</td>
+    </tr> 
+    <tr>
+      <td><p>fehlerreich</p></td>  
+      <td><mat-progress-bar value={{getMult(adunit.value_array[13].value)}}></mat-progress-bar></td>
+      <td><p>fehlerarm</p></td> 
+    </tr> 
+</table>   
+</div>
+</mat-tab>
+<mat-tab label="Eingabemöglichkeiten">
+    <p>Die verschiedenen Eingabemöglichkeiten ...</p>
+    <div>  
+<table>
+  <tr>
+    <td></td>
+    <td>{{adunit.value_array[14].value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>sind nachteilig</p></td>
+    <td><mat-progress-bar value={{getMult(adunit.value_array[14].value)}}></mat-progress-bar></td> 
+    <td><p>sind vorteilhaft</p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>{{adunit.value_array[15].value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>blockieren sich</p></td>
+    <td><mat-progress-bar value={{getMult(adunit.value_array[15].value)}}></mat-progress-bar></td>
+    <td><p>ergänzen sich</p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>{{adunit.value_array[16].value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>behindern sich</p></td>
+    <td><mat-progress-bar value={{getMult(adunit.value_array[16].value)}}></mat-progress-bar></td>
+    <td><p>unterstützen sich</p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>{{adunit.value_array[17].value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>sind schlecht zu kombinieren</p></td>
+    <td><mat-progress-bar value={{getMult(adunit.value_array[17].value)}}></mat-progress-bar></td>
+    <td><p>sind gut zu kombinieren</p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>{{adunit.value_array[18].value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>arbeiten schlecht zusammen</p></td>
+    <td><mat-progress-bar value={{getMult(adunit.value_array[18].value)}}></mat-progress-bar></td>
+    <td><p>arbeiten gut zusammen</p></td>
+  </tr>
+</table>
+</div>
+</mat-tab>
+<mat-tab label="Rückmeldung">
+  <p>Die Rückmeldung des Systems ist ...</p>
+    <div>
+<table>
+  <tr>
+    <td></td>
+    <td>{{adunit.value_array[19].value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>hinderlich</p></td>
+    <td><mat-progress-bar value={{getMult(adunit.value_array[19].value)}}></mat-progress-bar></td>
+    <td><p>förderlich</p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>{{adunit.value_array[20].value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>sinnlos</p></td>
+    <td><mat-progress-bar value={{getMult(adunit.value_array[20].value)}}></mat-progress-bar></td>
+    <td><p>sinnvoll</p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>{{adunit.value_array[21].value}} /10</td>
+  </tr>
+  <tr>
+    <td><p>verwirrend</p></td>
+    <td><mat-progress-bar value={{getMult(adunit.value_array[21].value)}}></mat-progress-bar></td>
+    <td><p>erklärend</p></td>
+  </tr>
+</table>
+</div>
+</mat-tab>
+</mat-tab-group>
+<mat-divider></mat-divider>
+
+ 

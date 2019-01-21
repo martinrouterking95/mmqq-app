@@ -1,0 +1,34 @@
+.formcontainer {
+    display: flex;
+    flex-direction: column;    
+  }
+  
+  .formcontainer > * {
+    width: 25%;
+  }
+
+table {
+    width: 100%; 
+    max-width: 1920px;
+    min-width: 1080px;
+  }
+.mat-column-Name {
+    width: 20%;
+}
+.mat-column-Kommentar {
+    width: 40%;
+}
+.mat-column-Bearbeiten {
+    width: 13,33%;
+}  
+.mat-column-Tests_anzeigen {
+    width: 13,33%;
+}
+.mat-column-Löschen {
+    width: 13,33%;
+  }  
+
+.mat-table {
+    border-spacing: 0;
+    background-color: rgba(128, 128, 128, 0);
+}

@@ -1,0 +1,14 @@
+.button-row button,
+.button-row a {
+  margin-right: 8px;
+}
+.dialog{
+  height:40px;
+  width:350px;
+  display: flex;
+  align-items: center;  
+  justify-content: center;
+}
+.mat-dialog-container {
+  background-color: rgba(128, 128, 128, 0);
+}

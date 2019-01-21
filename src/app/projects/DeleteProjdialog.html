@@ -1,0 +1,18 @@
+<div class="dialog">
+    <h3>{{data.name}} wirklich löschen?</h3>    
+</div> 
+<div class="dialog">
+    <p>Anmerkung: Die Tests innerhalb des Projektes werden hierbei nicht gelöscht!</p>
+</div>
+<br>
+<div class="dialog">
+    <div class="button-row">
+        <button mat-stroked-button  (click)="deleteProject(data.id)"  (click)="reloadpage()"  class="btn btn-danger">Ja</button>
+        <button mat-stroked-button  (click)="openLink()" class="btn btn-danger">Nein</button>
+    </div>
+</div>   
+    
+
+
+
+

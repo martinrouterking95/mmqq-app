@@ -1,0 +1,22 @@
+.formcontainer {
+    display: flex;
+    flex-direction: column;    
+  }
+  
+  .formcontainer > * {
+    width: 100%;
+  }
+  .dialog{
+    height:480px;
+    width:350px;
+    min-width: 350px;    
+    display: flex;  
+    flex-direction: column;     
+  }  
+  .buttoncontainer{
+    width:350px;
+    min-width: 350px;   
+  }
+  .right{
+    text-align:right;
+  }

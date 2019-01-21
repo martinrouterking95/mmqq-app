@@ -1,0 +1,13 @@
+.formcontainer {
+    display: flex;
+    flex-direction: column;    
+  }
+  
+  .formcontainer > * {
+    width: 20%;
+    min-width: 295px;
+  }
+  .buttoncontainer{
+    width: 17%;
+    min-width: 200px;
+  }

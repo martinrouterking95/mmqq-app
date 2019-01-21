@@ -1,0 +1,18 @@
+<div class="formcontainer" >
+  <mat-form-field [formGroup]="angForm" novalidate> 
+    <input matInput placeholder="Projektnamen ändern ..." type="text" class="form-control" name="name"  maxlength="18" formControlName="name" #name [(ngModel)] = "projects.name"/> 
+    <mat-hint align="end">{{name.value?.length || 0}}/18</mat-hint>
+    <mat-error *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" class="alert alert-danger">
+      <mat-error *ngIf="angForm.controls['name'].errors.required">
+        Ein Name wird vorrausgesetzt!
+      </mat-error>       
+    </mat-error>   
+  </mat-form-field>
+  <mat-form-field [formGroup]="angForm" novalidate>
+    <textarea matInput placeholder="Kommentar" type="text" class="form-control" name="comment"  maxlength="120" formControlName="comment" #comment  [(ngModel)] = "projects.comment"></textarea>
+  </mat-form-field>
+  </div>
+  <br><br>
+  <button mat-stroked-button (click)="updateProject(name.value,comment.value)" (click)="openSnackBar(name.value)" 
+  [disabled]="angForm.controls['name'].invalid" >Projekt aktualisieren</button>
+  <br><br>

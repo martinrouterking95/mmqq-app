@@ -1,0 +1,36 @@
+<h1>{{ adunit.save_name }}</h1>
+<mat-divider></mat-divider>
+<table>  
+  <tr>
+      <td><p><b>Joy of Use:</b></p></td>
+  </tr>
+  <tr>  
+    <td><mat-progress-bar value={{getMult(adunit.result_1)}}></mat-progress-bar></td>
+    <td>{{adunit.result_1}}</td>    
+  </tr>
+  <tr>
+    <td><p><b>Ease of Use:</b></p></td>
+  </tr>
+  <tr>   
+    <td><mat-progress-bar value={{getMult(adunit.result_2)}}></mat-progress-bar></td> 
+    <td>{{adunit.result_2}}</td>  
+  </tr>
+  <tr>
+    <td><p><b>Interaction Quality:</b></p></td>
+  </tr>
+  <tr>
+    <td><mat-progress-bar value={{getMult(adunit.result_3)}}></mat-progress-bar></td>
+    <td>{{adunit.result_3}}</td>   
+  </tr> 
+  <br>  
+  
+  <tr>
+  <td><p><b>Final Result:</b></p></td>    
+  </tr>
+  <tr>
+    <td><mat-progress-bar value={{getMult(adunit.result_final)}}></mat-progress-bar></td>
+    <td>{{adunit.result_final}}</td>   
+  </tr>
+</table>
+<br>
+<mat-divider></mat-divider>

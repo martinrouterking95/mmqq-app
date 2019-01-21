@@ -1,0 +1,38 @@
+  table{
+    width: 100%;     
+    max-width: 1080px;
+    min-width: 960px;
+    margin: 20px auto;
+    table-layout: fixed;
+  } 
+
+   td:nth-child(1){
+     width:25%;     
+     text-align: right;
+     align-content: right;
+     padding-right: 60px;       
+   }
+
+   td:nth-child(3) {
+    width:25%;   
+    text-align: left; 
+    padding-left: 60px;
+  }
+    td:nth-child(2) {
+    width: 50%;
+  } 
+  
+  .right{
+    float: right;
+    position: center;
+  }
+  .left{
+    float: left;
+    position: center;
+  }
+
+  .buttoncontainer{  
+    width:680px;    
+    float: left;
+    justify-content: left;
+  }

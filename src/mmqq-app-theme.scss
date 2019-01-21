@@ -1,0 +1,13 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+
+$mmqq-app-primary: mat-palette($mat-red,600);
+$mmqq-app-accent:  mat-palette($mat-red,600);
+$mmqq-app-warn:    mat-palette($mat-red,A400);
+
+
+$mmqq-app-theme: mat-light-theme($mmqq-app-primary, $mmqq-app-accent, $mmqq-app-warn);
+
+
+@include angular-material-theme($mmqq-app-theme);

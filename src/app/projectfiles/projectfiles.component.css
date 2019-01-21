@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+  }
+.mat-column-Name {
+    width: 30%;
+}
+.mat-column-Endergebnis {
+    width: 30%;
+}
+.mat-column-Bearbeiten {
+    width: 13,33%;
+}  
+.mat-column-Tabelle_anzeigen {
+    width: 13,33%;
+}
+.mat-column-Löschen {
+    width: 13,33%;
+  }  
+
+.mat-table {
+    border-spacing: 0;
+    background-color: rgba(128, 128, 128, 0);
+}

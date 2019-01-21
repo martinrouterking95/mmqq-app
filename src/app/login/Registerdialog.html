@@ -1,0 +1,37 @@
+<div class="dialog">
+<h1>Registrieren</h1>
+<div class="formcontainer">
+  <mat-form-field [formGroup]="angForm" novalidate>
+    <input matInput placeholder="Vorname" type="text" class="form-control" name="first_name"  maxlength="18" formControlName="first_name" #first_name/> 
+    <mat-hint align="end">{{first_name.value?.length || 0}}/18</mat-hint>        
+  </mat-form-field>
+  <mat-form-field [formGroup]="angForm" novalidate>
+    <input matInput placeholder="Nachname" type="text" class="form-control" name="last_name"  maxlength="18" formControlName="last_name" #last_name/> 
+    <mat-hint align="end">{{last_name.value?.length || 0}}/18</mat-hint>       
+  </mat-form-field>
+  <mat-form-field [formGroup]="angForm" novalidate>
+    <input matInput placeholder="Login Name" type="text" class="form-control" name="login_name"  maxlength="18" formControlName="login_name" #login_name required/> 
+    <mat-hint align="end">{{login_name.value?.length || 0}}/18</mat-hint>       
+    <mat-error *ngIf="angForm.controls['login_name'].invalid && (angForm.controls['login_name'].dirty || angForm.controls['login_name'].touched)" class="alert alert-danger">
+        <mat-error *ngIf="angForm.controls['login_name'].errors.required">
+           Ein Login Name wird vorrausgesetzt!
+        </mat-error>       
+      </mat-error> 
+  </mat-form-field>
+  <mat-form-field [formGroup]="angForm" novalidate>
+    <input matInput placeholder="Passwort" type="text" class="form-control" name="password"  minlength="6" maxlength="18" formControlName="password" #password required/> 
+    <mat-hint align="end">{{password.value?.length || 0}}/18</mat-hint>       
+    <mat-error *ngIf="angForm.controls['password'].invalid && (angForm.controls['password'].dirty || angForm.controls['password'].touched)" class="alert alert-danger">
+        <mat-error *ngIf="angForm.controls['password'].errors.required">
+           Ein Passwort mit mindestens 6 Zeichen wird vorrausgesetzt!
+        </mat-error>       
+      </mat-error> 
+  </mat-form-field> 
+  </div>
+  <br><br>
+  <table class="buttoncontainer">
+      <td><button mat-stroked-button (click)="addUser(first_name.value, last_name.value, login_name.value, password.value)"  (click)="openSnackBar(login_name.value)"
+      (click)="closeDialog()" [disabled]="angForm.controls['login_name'].invalid || angForm.controls['password'].invalid" >Speichern</button></td>   
+      <td class="right"><button mat-stroked-button (click)="closeDialog()">Abbrechen</button></td>
+  </table>  
+</div>
